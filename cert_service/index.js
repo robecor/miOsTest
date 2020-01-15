@@ -1,9 +1,12 @@
 const kue = require('kue');
-const queue = kue.createQueue();
 const jobEnums = require('../enums/jobEnums');
 const selfsigned = require('selfsigned');
 const request = require('request');
 const config = require('./config.json');
+
+const queue = kue.createQueue({
+  redis: config.redis
+});
 
 queue.process(jobEnums.CREATE_CERT, function (job, done) {
   const {domain, method} = job.data;

@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 const {checkBodyData} = require('./services/checker');
 const jobEnums = require('../enums/jobEnums');
 const kue = require('kue');
-const queue = kue.createQueue();
+const config = require('./config.json');
+
+const queue = kue.createQueue({
+  redis: config.redis
+});
 
 app.use(bodyParser.json());
 
